@@ -5,6 +5,8 @@ export default {
     extend: {
       colors: {
         mistyRosePink: "#DBBCC3",
+        softSkyBlue: "#F5F8FF",
+        semiTransparentSkyBlue: "#215EE9",
       },
     },
   },

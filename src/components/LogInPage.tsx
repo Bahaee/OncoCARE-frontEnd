@@ -1,14 +1,14 @@
 import React from "react";
 import Logo from "./Logo";
-import RibbonImage from "../assets/images/RibbonWithoutBG.png";
 import LoginForm from "./LogInForm";
+import ImgRibbon from "./ImgRibbon";
 
 const LogIn = () => {
   return (
-    <div>
+    <div className="">
       <Logo />
       <LoginForm />
-      <img src={RibbonImage} alt="Ribbon" />
+      <ImgRibbon />
     </div>
   );
 };
