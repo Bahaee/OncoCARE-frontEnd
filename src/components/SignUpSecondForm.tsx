@@ -82,7 +82,7 @@ const SignUpSecondForm = () => {
               <input
                 {...register("address")}
                 className="index-10 appearance-none border-b border-blue-500 opacity-60 w-full py-2 px-3 text-blue-400 placeholder-blue-200 leading-tight focus:outline-none focus:shadow-outline"
-                type="password"
+                type="text"
                 placeholder="Clinical address"
                 aria-label="address"
               />
