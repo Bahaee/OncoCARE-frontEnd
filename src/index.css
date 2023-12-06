@@ -4,5 +4,16 @@
 
 body {
     background-color: #F5F8FF;
+  }
 
+input[type="date"] {
+    appearance: none;
+    -moz-appearance: textfield; /* Pour Firefox */
+    -webkit-appearance: none; /* Pour certains navigateurs WebKit, peut ne pas être nécessaire */
+    margin-right: 4px; /* Ajustez la marge à votre convenance */
+    color: #4299e1; /* Ajustez la couleur selon vos préférences */
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
   }
