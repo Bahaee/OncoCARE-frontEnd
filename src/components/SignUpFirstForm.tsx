@@ -12,10 +12,10 @@ const schema = z.object({
     .string()
     .min(3, { message: "name must be at least 3 characters" }),
   email: z.string().email({ message: "Invalid email address" }),
-  phone: z.number().refine(
+  phone: z.string().refine(
     (data) => {
       const phoneNumber = data.toString();
-      return Number.isInteger(data) && phoneNumber.length >= 10;
+      return phoneNumber.length >= 10;
     },
     {
       message: "Phone must be a number with at least 10 digits",
@@ -52,7 +52,7 @@ const SignUpFirstForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<signUp1Data>({
     resolver: zodResolver(schema),
   });
@@ -141,7 +141,7 @@ const SignUpFirstForm = () => {
             <div className="w-2/5 mx-auto flex items-center pl-2 relative">
               <BsFillPhoneFill className="text-2xl text-blue-500 opacity-60 mr-2" />
               <input
-                {...register("phone", { valueAsNumber: true })}
+                {...register("phone" /*, { valueAsNumber: true }*/)}
                 className="appearance-none border-b border-blue-500 opacity-60 w-full py-2 px-3 text-blue-400 placeholder-blue-200 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 placeholder="Phone Number"
@@ -214,6 +214,7 @@ const SignUpFirstForm = () => {
 
           <div className="mb-6 flex items-center justify-center z-10">
             <button
+              // disabled={!isValid}
               className="pointer-events-auto bg-blue-500 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded-3xl focus:outline-none focus:shadow-outline"
               type="submit"
             >

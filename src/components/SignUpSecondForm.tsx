@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod"; //Integrate reacthook for
 const schema = z.object({
   iDrCard: z
     .string()
-    .min(8, { message: "iDrCard must be at least 3 characters" }),
+    .min(8, { message: "iDrCard must be at least 8 characters" }),
   gender: z.enum(["Man", "Woman", "Other"]).nullable(),
   dateOfBirth: z.date(),
   country: z.string(),
@@ -28,11 +28,16 @@ const SignUpSecondForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<signUp2Data>({ resolver: zodResolver(schema) });
 
-  const onSubmit = (data: FieldValues) => {
-    console.log("Form submitted with data:", data);
+  const onSubmit = (data: signUp2Data) => {
+    console.log("Form data submitted:", data);
+    if (!isValid) {
+      console.error("Form is not valid. Check for errors below:");
+      console.error(errors);
+      return;
+    }
   };
   const [countries, setCountries] = useState<string[]>([]);
   const [selectedGender, setSelectedGender] = useState("Gender");
@@ -64,7 +69,19 @@ const SignUpSecondForm = () => {
                 placeholder="iDrCard"
                 aria-label="iDrCard"
               />
-              {errors.iDrCard && <p>{errors.iDrCard.message}</p>}
+              {errors.iDrCard && (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "12px",
+                    position: "absolute",
+                    bottom: "-16px",
+                    left: "10px",
+                  }}
+                >
+                  {errors.iDrCard.message}
+                </p>
+              )}
             </div>
             <div className="w-1/3 mx-auto flex items-center pr-2 pl-2">
               <TbGenderBigender className="text-2xl text-blue-500 opacity-60 mr-2" />
@@ -80,6 +97,19 @@ const SignUpSecondForm = () => {
                 <option value="Woman">Female</option>
                 <option value="Other">Other</option>
               </select>
+              {errors.gender && (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "12px",
+                    position: "absolute",
+                    bottom: "-16px",
+                    left: "10px",
+                  }}
+                >
+                  {errors.gender.message}
+                </p>
+              )}
             </div>
             <div className="w-1/3 mx-auto flex items-center pl-2">
               <BsCalendar className="text-2xl text-blue-500 opacity-60 mr-2" />
@@ -90,6 +120,19 @@ const SignUpSecondForm = () => {
                 placeholder="Date of Birth"
                 aria-label="dateOfBirth"
               />
+              {errors.dateOfBirth && (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "12px",
+                    position: "absolute",
+                    bottom: "-16px",
+                    left: "10px",
+                  }}
+                >
+                  {errors.dateOfBirth.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -111,6 +154,19 @@ const SignUpSecondForm = () => {
                   </option>
                 ))}
               </select>
+              {errors.country && (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "12px",
+                    position: "absolute",
+                    bottom: "-16px",
+                    left: "10px",
+                  }}
+                >
+                  {errors.country.message}
+                </p>
+              )}
             </div>
             <div className="w-2/5 mx-auto flex items-center pl-2">
               <GiModernCity className="text-2xl text-blue-500 opacity-60 mr-2" />
@@ -121,6 +177,19 @@ const SignUpSecondForm = () => {
                 placeholder="City"
                 aria-label="City"
               />
+              {errors.city && (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "12px",
+                    position: "absolute",
+                    bottom: "-16px",
+                    left: "10px",
+                  }}
+                >
+                  {errors.city.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -134,11 +203,25 @@ const SignUpSecondForm = () => {
                 placeholder="Clinical address"
                 aria-label="address"
               />
+              {errors.address && (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "12px",
+                    position: "absolute",
+                    bottom: "-16px",
+                    left: "10px",
+                  }}
+                >
+                  {errors.address.message}
+                </p>
+              )}
             </div>
           </div>
 
           <div className="mb-6 flex items-center justify-center z-10">
             <button
+              //   disabled={!isValid}
               className="pointer-events-auto bg-blue-500 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded-3xl focus:outline-none focus:shadow-outline"
               type="submit"
             >
