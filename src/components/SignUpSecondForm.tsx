@@ -15,11 +15,26 @@ const schema = z.object({
   iDrCard: z
     .string()
     .min(8, { message: "iDrCard must be at least 8 characters" }),
-  gender: z.enum(["Man", "Woman", "Other"]).nullable(),
-  dateOfBirth: z.date(),
-  country: z.string(),
-  city: z.string(),
-  address: z.string(),
+  gender: z
+    .string()
+    .nullable()
+    .refine((data) => data !== null && data.trim() !== "", {
+      message: "You must specify your gender",
+    })
+    .refine((data) => ["Man", "Woman", "Other"].includes(data), {
+      message:
+        "Invalid enum value. Expected 'Man' | 'Woman' | 'Other', received '${data}'",
+    }),
+  dateOfBirth: z.string(),
+  country: z.string().refine((data) => data !== "Select your country", {
+    message: "Please select a country",
+  }),
+  city: z.string().refine((data) => data.trim() !== "", {
+    message: "City is required",
+  }),
+  address: z.string().refine((data) => data.trim() !== "", {
+    message: "Address is required",
+  }),
 });
 
 type signUp2Data = z.infer<typeof schema>; //This returns a typescript type which is similar to an interface
@@ -60,7 +75,7 @@ const SignUpSecondForm = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
           <div className="flex items-center mb-8">
-            <div className="w-1/3 mx-auto flex items-center pr-2">
+            <div className="w-1/3 mx-auto flex items-center pr-2 relative">
               <FaRegAddressCard className="text-2xl text-blue-500 opacity-60 mr-2" />
               <input
                 {...register("iDrCard")}
@@ -83,7 +98,7 @@ const SignUpSecondForm = () => {
                 </p>
               )}
             </div>
-            <div className="w-1/3 mx-auto flex items-center pr-2 pl-2">
+            <div className="w-1/3 mx-auto flex items-center pr-2 pl-2 relative">
               <TbGenderBigender className="text-2xl text-blue-500 opacity-60 mr-2" />
               <select
                 {...register("gender")}
@@ -111,7 +126,7 @@ const SignUpSecondForm = () => {
                 </p>
               )}
             </div>
-            <div className="w-1/3 mx-auto flex items-center pl-2">
+            <div className="w-1/3 mx-auto flex items-center pl-2 relative">
               <BsCalendar className="text-2xl text-blue-500 opacity-60 mr-2" />
               <input
                 {...register("dateOfBirth")} // Utilisez le nom "dateOfBirth" comme nom pour la propriété dans data
@@ -137,7 +152,7 @@ const SignUpSecondForm = () => {
           </div>
 
           <div className="flex items-center mb-8">
-            <div className="w-3/5 mx-auto flex items-center pr-2">
+            <div className="w-3/5 mx-auto flex items-center pr-2 relative">
               <TbWorldPin className="text-2xl text-blue-500 opacity-60 mr-2" />
               <select
                 {...register("country")}
@@ -145,9 +160,7 @@ const SignUpSecondForm = () => {
                 aria-label="country"
                 defaultValue=""
               >
-                <option value="" disabled>
-                  Select a country
-                </option>
+                <option value="Select your country">Select your country</option>
                 {countries.map((country, index) => (
                   <option key={index} value={country}>
                     {country}
@@ -168,7 +181,7 @@ const SignUpSecondForm = () => {
                 </p>
               )}
             </div>
-            <div className="w-2/5 mx-auto flex items-center pl-2">
+            <div className="w-2/5 mx-auto flex items-center pl-2 relative">
               <GiModernCity className="text-2xl text-blue-500 opacity-60 mr-2" />
               <input
                 {...register("city")}
@@ -194,7 +207,7 @@ const SignUpSecondForm = () => {
           </div>
 
           <div className="flex items-center mb-8">
-            <div className="w-full mx-auto flex items-center">
+            <div className="w-full mx-auto flex items-center relative">
               <BiClinic className="text-2xl text-blue-500 opacity-60 mr-2" />
               <input
                 {...register("address")}
