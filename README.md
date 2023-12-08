@@ -27,3 +27,4 @@ If you are developing a production application, we recommend updating the config
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 
 Install vite w tailwind w react icons w react router w install react hook form, npm install react-datepicker
+schema validation rules, install zod, npm i @hookform/resolvers //This library include various schema validation libraries

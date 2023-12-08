@@ -6,7 +6,7 @@ import SignUpSecondPage from "./components/SignUpSecondPage";
 function App() {
   return (
     <>
-      <SignUpSecondPage />
+      <SignUpFirstPage />
     </>
   );
 }
